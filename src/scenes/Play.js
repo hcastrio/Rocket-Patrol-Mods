@@ -48,7 +48,7 @@ class Play extends Phaser.Scene {
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
-            align: 'right',
+            align: 'center',
             padding: {
             top: 5,
             bottom: 5,
@@ -57,6 +57,10 @@ class Play extends Phaser.Scene {
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
         
+        this.highScore = parseInt(localStorage.getItem("score")) || 0;
+
+        this.highMiddle = this.add.text(borderUISize + borderPadding * 22, borderUISize + borderPadding * 2, this.highScore, scoreConfig);
+
         this.p1Clock = game.settings.gameTimer;
 
         let clockConfig = {
@@ -64,7 +68,7 @@ class Play extends Phaser.Scene {
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
-            align: 'right',
+            align: 'center',
             padding: {
             top: 5,
             bottom: 5,
@@ -146,6 +150,12 @@ class Play extends Phaser.Scene {
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
+
+        if (this.p1Score > this.highScore) {
+            this.highScore = this.p1Score;
+            localStorage.setItem("score", this.highScore);
+            this.highMiddle.text = this.highScore;
+        }
     }
 
     formatClock(milliseconds) {
