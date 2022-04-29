@@ -54,6 +54,25 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
+        
+        this.p1Clock = game.settings.gameTimer;
+
+        let clockConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+            top: 5,
+            bottom: 5,
+            },
+            fixedWidth: 100
+        };
+
+        this.clockLeft = this.add.text(borderUISize + borderPadding * 44 - 3, borderUISize + borderPadding * 2, this.formatClock(this.p1Clock), clockConfig);
+
+        this.clockEvent = this.time.addEvent({delay: 1000, callback: () => {this.p1Clock -= 1000; this.clockLeft.text = this.formatClock(this.p1Clock);}, scope: this, loop: true});
         // GAME OVER flag
         this.gameOver = false;
         // 60-second play clock
@@ -65,7 +84,7 @@ class Play extends Phaser.Scene {
         }, null, this);
     }
 
-    update() {
+    update() {        
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
@@ -77,6 +96,9 @@ class Play extends Phaser.Scene {
             this.ship02.update();
             this.ship03.update();
         }
+
+        if(this.gameOver) this.time.removeAllEvents();
+        
         // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
@@ -122,5 +144,12 @@ class Play extends Phaser.Scene {
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
+    }
+
+    formatClock(milliseconds) {
+        let s = milliseconds/1000;
+        let seconds = s%61;
+        seconds = seconds.toString().padStart(2, "0");
+        return `${seconds}`;
     }
 }
