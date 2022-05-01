@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
         this.load.image('spaceship', './assets/coolship.png');
         this.load.image('smallship', './assets/smallship.png');
         this.load.image('stars', './assets/ameristar.png');
-        this.load.image('borderui', './Assets/border.png');
+        this.load.image('border', './Assets/border.png');
         this.load.spritesheet('explosion', './assets/fireexplosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
 
@@ -24,7 +24,7 @@ class Play extends Phaser.Scene {
         // green UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x277D11).setOrigin(0, 0);
         
-        this.borderUI = this.add.image(game.config.width/2, game.config.height/2, 'borderui');
+        this.borderUI = this.add.image(game.config.width/2, game.config.height/2, 'border');
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
         // add spaceships (x4)
