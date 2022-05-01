@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
         this.load.image('spaceship', './assets/coolship.png');
         this.load.image('smallship', './assets/smallship.png');
         this.load.image('stars', './assets/ameristar.png');
-        this.load.image('borderui', './Assets/borderUi.png');
+        this.load.image('borderui', './Assets/border.png');
         this.load.spritesheet('explosion', './assets/fireexplosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
 
